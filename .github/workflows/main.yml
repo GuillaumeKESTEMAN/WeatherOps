@@ -8,11 +8,13 @@ on:
   push:
     branches:
       - main
+
 jobs:
   front:
     runs-on: ubuntu-latest
-		env:
-      working-directory: ./front
+    defaults:
+      run:
+        working-directory: ./front
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -20,14 +22,15 @@ jobs:
         with:
           node-version: "*" # Use the LTS Node.js version
           cache: "npm"
+          cache-dependency-path: './front/package-lock.json'
       - run: npm ci
-        working-directory: ${{env.working-directory}}
       - run: npm run build
-        working-directory: ${{env.working-directory}}
+
   back:
     runs-on: ubuntu-latest
-		env:
-      working-directory: ./back
+    defaults:
+      run:
+        working-directory: ./back
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -35,7 +38,6 @@ jobs:
         with:
           node-version: "*" # Use the LTS Node.js version
           cache: "npm"
+          cache-dependency-path: './back/package-lock.json'
       - run: npm ci
-        working-directory: ${{env.working-directory}}
       - run: npm run build
-        working-directory: ${{env.working-directory}}
