@@ -4,9 +4,7 @@ services:
       context: ./back
       dockerfile: Dockerfile
     ports:
-      - "3001:3000"
-    volumes:
-      - ./back:/app
+      - "3000:3000"
     environment:
       - NODE_ENV=production
 
@@ -15,8 +13,6 @@ services:
       context: ./front
       dockerfile: Dockerfile
     ports:
-      - "3000:80"
-    volumes:
-      - ./front:/app
+      - "80:80"
     environment:
       - NODE_ENV=production
