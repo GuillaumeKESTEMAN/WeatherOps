@@ -9,6 +9,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  issues: none
+  pull-requests: none
+
 jobs:
   front:
     runs-on: ubuntu-latest
