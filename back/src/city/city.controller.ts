@@ -7,6 +7,6 @@ export class CityController {
 
   @Get()
   async getCity(@Query() query: { search: string }) {
-    return await this.cityService.getCity(query.search);
+    return this.cityService.getCity(query.search);
   }
 }
