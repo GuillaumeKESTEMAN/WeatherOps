@@ -31,6 +31,7 @@ export class WeatherService {
       .pipe(
         map(
           (response): TWeather => ({
+            city: response.data.name,
             temp: Number(response.data.main.temp.toFixed(1)),
             feltTemp: Number(response.data.main.feels_like.toFixed(1)),
             humidity: response.data.main.humidity,

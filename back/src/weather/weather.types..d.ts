@@ -47,6 +47,7 @@ export type TWeatherResponse = {
 };
 
 export type TWeather = {
+  city: string;
   temp: number;
   feltTemp: number;
   humidity: number;
