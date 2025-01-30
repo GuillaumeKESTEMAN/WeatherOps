@@ -1,3 +1,9 @@
+import { Map } from '../shared/Map/Map'
+
 export const Home = () => {
-	return <div>Hello World, I'm coming!^^</div>;
-};
+  return (
+    <div>
+      <Map />
+    </div>
+  )
+}
