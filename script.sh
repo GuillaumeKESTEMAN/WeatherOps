@@ -7,14 +7,14 @@ minikube start
 eval $(minikube -p minikube docker-env)
 
 # Construire les images
-cd /home/simon/Downloads/projet_git/WeatherOps/front
+cd front/
 docker build -t frontend .
 
-cd /home/simon/Downloads/projet_git/WeatherOps/back
+cd ../back
 docker build -t backend .
 
 # Appliquer les fichiers de configuration Kubernetes
-cd /home/simon/Downloads/projet_git/WeatherOps/k8s
+cd ../k8s
 kubectl apply -f backend-deployment.yaml
 kubectl apply -f backend-service.yaml
 kubectl apply -f frontend-deployment.yaml
@@ -23,3 +23,4 @@ kubectl apply -f frontend-service.yaml
 # Vérifier l'état des pods
 kubectl get pods
 kubectl get deployments
+
