@@ -24,6 +24,7 @@ spec:
         - env:
             - name: NODE_ENV
               value: production
+          imagePullPolicy: Never
           image: frontend
           name: frontend
           ports:
