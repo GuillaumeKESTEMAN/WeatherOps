@@ -6,7 +6,7 @@ import type {
   TWeather,
   TWeatherResponse,
   WeatherQueryParams,
-} from './weather.types.';
+} from './weather.types';
 
 @Injectable()
 export class WeatherService {

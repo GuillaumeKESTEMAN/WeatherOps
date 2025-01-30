@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { WeatherService } from './weather.service';
-import type { WeatherQueryParams } from './weather.types.';
+import type { WeatherQueryParams } from './weather.types';
 
 @Controller('weather')
 export class WeatherController {
