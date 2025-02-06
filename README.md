@@ -16,5 +16,18 @@ Egalement, notre k8s étant en local, sa configuration sera limitée.
 6. Remplir le fichier en reprenant les informations nécessaires (ici, pour Supabase et k8s)
 7. Les informations incluses seront basiquement les informations disponibles dans les paramètres de Supabase et dans les fichiers existants k8s
 
+
+Une fois nos différents fichiers prêts, nous devrons utiliser quelques commandes (en étant dans le répértoire de Terrafom) :
+
+terrafom init : pour initialiser la configuration
+terrafom validate : pour vérifier la structure et la syntaxe des fichiers
+terrafom apply : pour appliquer les fichiers de configuration et créer les ressources Terraform
+
+
+2 commandes optionnelles qui pourraient être utiles : 
+
+terraform show : pour voir les ressources Terrafom et leur état 
+terraform destroy : pour supprimer les ressources Terraform
+
 Dans un souci de simplicité, nous n'expliquerons pas en détail nos fichiers car nous supposons que notre audience est relativement technique ^^
 De plus, de nombreuses templates (exemples de configurations) sont disponibles sur internet et très bien fait :)
