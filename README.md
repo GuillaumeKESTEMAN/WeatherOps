@@ -47,3 +47,8 @@ terraform destroy : pour supprimer les ressources Terraform
 
 Dans un souci de simplicité, nous n'expliquerons pas en détail nos fichiers car nous supposons que notre audience est relativement technique ^^
 De plus, de nombreuses templates (exemples de configurations) sont disponibles sur internet et très bien fait :)
+
+## Répartition des tâches 
+
+Guillaume K., Pierre T., Thibault F : Developpement (back, front, API, bdd)
+Simon B : DevOPS (Terrafom, Kubernetes, Docker, Documentation)
