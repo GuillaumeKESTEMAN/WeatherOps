@@ -50,9 +50,8 @@ export const MapPanelHeader = ({
 	};
 
 	useEffect(() => {
-		setIsPanelCollapsed(!weatherData.city);
-
 		if (weatherData.city) {
+			setIsPanelCollapsed(false);
 			setSearchInput(weatherData.city);
 		}
 	}, [setIsPanelCollapsed, weatherData.city]);
