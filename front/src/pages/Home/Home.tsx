@@ -15,7 +15,7 @@ export const Home = () => {
 			<MapContainer
 				center={coordinates}
 				zoom={13}
-				scrollWheelZoom
+				zoomControl={false}
 				style={{ height: '100%', width: '100%' }}
 				className="z-0 map-container"
 			>
