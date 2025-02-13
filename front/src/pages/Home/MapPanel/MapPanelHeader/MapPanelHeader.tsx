@@ -1,10 +1,14 @@
 import Axios from 'axios';
-import { AutoComplete } from 'primereact/autocomplete';
+import {
+	AutoComplete,
+	type AutoCompleteSelectEvent,
+} from 'primereact/autocomplete';
 import { Button } from 'primereact/button';
 import { FloatLabel } from 'primereact/floatlabel';
-import { useState, type Dispatch, type SetStateAction } from 'react';
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 import { useAppContext } from '../../../../shared/AppContext/AppContext.hook';
 
+import type { TCity } from '../../../../shared/types';
 import './MapPanelHeader.css';
 
 const VITE_BACK_URL = import.meta.env.VITE_BACK_URL;
@@ -14,14 +18,17 @@ type TMapPanelHeader = {
 	setIsPanelCollapsed: Dispatch<SetStateAction<boolean>>;
 };
 
-export const MapPanelHeader = ({isPanelCollapsed, setIsPanelCollapsed}: TMapPanelHeader) => {
-	const { handleCitySelection } = useAppContext();
+export const MapPanelHeader = ({
+	isPanelCollapsed,
+	setIsPanelCollapsed,
+}: TMapPanelHeader) => {
+	const { weatherData, handleCitySelection } = useAppContext();
 	const [searchInput, setSearchInput] = useState('');
-	const [suggestions, setSuggestions] = useState([]);
+	const [suggestions, setSuggestions] = useState<TCity[]>([]);
 
 	const search = () => {
 		if (searchInput.length >= 3) {
-			Axios.get(`${VITE_BACK_URL}/city`, {
+			Axios.get<TCity[]>(`${VITE_BACK_URL}/city`, {
 				params: {
 					search: searchInput,
 				},
@@ -34,6 +41,19 @@ export const MapPanelHeader = ({isPanelCollapsed, setIsPanelCollapsed}: TMapPane
 				});
 		}
 	};
+
+	const handleOnSelect = (event: AutoCompleteSelectEvent) => {
+		handleCitySelection([event.value.lat, event.value.lon]);
+		setIsPanelCollapsed(false);
+	};
+
+	useEffect(() => {
+		setIsPanelCollapsed(!weatherData.city);
+
+		if (weatherData.city) {
+			setSearchInput(weatherData.city);
+		}
+	}, [setIsPanelCollapsed, weatherData.city]);
 
 	return (
 		<div
@@ -49,11 +69,8 @@ export const MapPanelHeader = ({isPanelCollapsed, setIsPanelCollapsed}: TMapPane
 					value={searchInput}
 					suggestions={suggestions}
 					completeMethod={search}
-					onChange={(e) => setSearchInput(e.value)}
-					onSelect={(e) => {
-						handleCitySelection([e.value.lat, e.value.lon]);
-						setSearchInput('');
-					}}
+					onChange={(event) => setSearchInput(event.value)}
+					onSelect={handleOnSelect}
 					className="search-input m-2 w-12"
 				/>
 				<label htmlFor="search" className="ml-2">
