@@ -27,19 +27,21 @@ export const MapPanelHeader = ({
 	const [suggestions, setSuggestions] = useState<TCity[]>([]);
 
 	const search = () => {
-		if (searchInput.length >= 3) {
-			Axios.get<TCity[]>(`${VITE_BACK_URL}/city`, {
-				params: {
-					search: searchInput,
-				},
-			})
-				.then((res) => {
-					setSuggestions(res.data);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+		if (searchInput.length < 3) {
+			return;
 		}
+
+		Axios.get<TCity[]>(`${VITE_BACK_URL}/city`, {
+			params: {
+				search: searchInput,
+			},
+		})
+			.then((res) => {
+				setSuggestions(res.data);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
 	};
 
 	const handleOnSelect = (event: AutoCompleteSelectEvent) => {
