@@ -14,7 +14,9 @@ Les technologies sont :
 - Front : React en Typescript
 - Back : NestTS
 - BDD : Supabase (Postgrès)
-- API : API du gouvernement pour récupérer les villes de France // OpenWeatherMap pour les prévisions météo
+- APIs : 
+  - API du gouvernement pour récupérer les villes de France
+  - API d'OpenWeatherMap pour les prévisions météo
 
 ## Terraform
 
