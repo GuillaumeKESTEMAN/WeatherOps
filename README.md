@@ -53,4 +53,4 @@ De plus, de nombreuses templates (exemples de configurations) sont disponibles s
 ## Répartition des tâches 
 
 Guillaume K., Pierre T., Thibault F. : Développement (back, front, API, base de données)
-Simon B : DevOPS (Terrafom, Kubernetes, Docker, Documentation)
+Simon B. : DevOPS (Terrafom, Kubernetes, Docker, Documentation)
