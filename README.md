@@ -1,5 +1,21 @@
 # WeatherOps
 
+## Description
+
+Le projet WeatherOps est une application web avec une carte qui permet d'obtenir la météo pour n'importe quel emplacement en France.
+Pour cela, il suffit d'entrer une adresse dans la barre de recherche ou de cliquer sur un point.
+
+L'application est assez intuitive
+
+## Technologies
+
+Les technologies sont : 
+
+- Front : React en Typescript
+- Back : NestTS
+- BDD : Supabase (Postgrès)
+- API : API du gouvernement pour récupérer les villes de France // OpenWeatherMap pour les prévisions météo
+
 ## Terraform
 
 Nous allons ici expliquer comment configurer Terraform pour notre projet.
