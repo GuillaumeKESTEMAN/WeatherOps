@@ -1,5 +1,12 @@
 export type TCity = { id: string; label: string; lat: string; lon: string };
 
+export type TFavoriteCity = {
+  user_id: string;
+  label: string;
+  lat: string;
+  lon: string;
+};
+
 export type TAdresse = {
   type: string;
   geometry: {
