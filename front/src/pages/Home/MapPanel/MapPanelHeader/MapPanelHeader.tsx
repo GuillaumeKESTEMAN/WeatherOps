@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import {
 	AutoComplete,
+	type AutoCompleteCompleteEvent,
 	type AutoCompleteSelectEvent,
 } from 'primereact/autocomplete';
 import { Button } from 'primereact/button';
@@ -26,14 +27,16 @@ export const MapPanelHeader = ({
 	const [searchInput, setSearchInput] = useState('');
 	const [suggestions, setSuggestions] = useState<TCity[]>([]);
 
-	const search = () => {
-		if (searchInput.length < 3) {
+	const search = (event: AutoCompleteCompleteEvent) => {
+		const newSearchInput = event.query;
+
+		if (newSearchInput.length < 3) {
 			return;
 		}
 
 		Axios.get<TCity[]>(`${VITE_BACK_URL}/city`, {
 			params: {
-				search: searchInput,
+				search: newSearchInput,
 			},
 		})
 			.then((res) => {
