@@ -11,7 +11,23 @@ export const useMapManager = () => {
 		},
 	});
 
-  useEffect(() => {
-    map.flyTo(coordinates, 13); 
-  }, [coordinates, map]);
+	useEffect(() => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const { latitude, longitude } = position.coords;
+					handleCitySelection([latitude, longitude]);
+				},
+				null,
+				{
+					enableHighAccuracy: true,
+					timeout: 5000,
+				}
+			);
+		}
+	}, [handleCitySelection]);
+
+	useEffect(() => {
+		map.flyTo(coordinates, 13);
+	}, [coordinates, map]);
 };
