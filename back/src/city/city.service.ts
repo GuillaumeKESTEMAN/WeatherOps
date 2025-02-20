@@ -1,13 +1,18 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { createClient } from '@supabase/supabase-js';
 import { catchError, map, of, type Observable } from 'rxjs';
-import type { TAdressesResponse, TCity } from './city.types';
+import { EnvironmentService } from 'src/environment/environment.service';
+import type { TAdressesResponse, TCity, TFavoriteCity } from './city.types';
 
 @Injectable()
 export class CityService {
   private readonly gouvAdressesUrl = 'https://data.geopf.fr/geocodage/search';
 
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly environmentService: EnvironmentService,
+  ) {}
 
   async getCity(searchLabel: string): Promise<Observable<TCity[]>> {
     return this.httpService
@@ -29,5 +34,20 @@ export class CityService {
         ),
         catchError(() => of([])),
       );
+  }
+
+  async saveFavoriteCity(
+    favoriteCity: TFavoriteCity,
+  ): Promise<{ status: 'success' | 'error' }> {
+    const supabase = createClient(
+      this.environmentService.getSupabaseUrl(),
+      this.environmentService.getSupabaseKey(),
+    );
+
+    const { error } = await supabase
+      .from('favoritesCities')
+      .insert(favoriteCity);
+
+    return { status: Boolean(error) ? 'error' : 'success' };
   }
 }
