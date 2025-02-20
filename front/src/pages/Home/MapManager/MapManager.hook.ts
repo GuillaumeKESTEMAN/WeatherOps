@@ -24,8 +24,6 @@ export const useMapManager = () => {
 					timeout: 5000,
 				}
 			);
-		} else {
-			console.log('Geolocation is not supported by this browser.');
 		}
 	}, [handleCitySelection]);
 
