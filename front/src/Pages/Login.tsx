@@ -8,10 +8,6 @@ const DB_API_KEY = import.meta.env.VITE_DB_API_KEY
 export const Login = () => {
   
     const supabase = createClient(DB_URL, DB_API_KEY )
-    const getRedirectURL = () => {
-      const origin = typeof window !== 'undefined' ? window.location.origin : '';
-      return `${origin}`;
-    };
 
     supabase.auth.onAuthStateChange((event) => {
       if (event === 'SIGNED_IN') {
