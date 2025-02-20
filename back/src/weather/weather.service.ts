@@ -38,6 +38,7 @@ export class WeatherService {
             windSpeed: Math.round(response.data.wind.speed),
             clouds: response.data.clouds.all,
             icon: `http://openweathermap.org/img/w/${response.data.weather[0].icon}.png`,
+            main: response.data.weather[0].main,
           }),
         ),
         catchError((error) => {

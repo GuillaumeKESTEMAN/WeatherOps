@@ -1,3 +1,17 @@
 .map-panel {
-    margin: 1rem;
+	margin: 1rem;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	width: 300px;
+	z-index: 5;
+}
+
+.weather-data {    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.weather-data p {
+	margin: 0;
 }
