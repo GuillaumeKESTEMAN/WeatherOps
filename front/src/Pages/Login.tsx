@@ -1,34 +1,33 @@
-import { createClient } from '@supabase/supabase-js'
 import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa} from '@supabase/auth-ui-shared'
-
-const DB_URL = import.meta.env.VITE_DB_URL;
-const DB_API_KEY = import.meta.env.VITE_DB_API_KEY
+import { ThemeSupa } from '@supabase/auth-ui-shared'
+import { useLogin } from '../shared/hooks/Login.hook';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 export const Login = () => {
-  
-    const supabase = createClient(DB_URL, DB_API_KEY )
 
-    supabase.auth.onAuthStateChange((event) => {
-      if (event === 'SIGNED_IN') {
-        window.location.href = '/'
-        
-      }
-    });
+  const { supabaseClient, session } = useLogin();
 
-    return (
-      <div style={{ 
-         display: 'flex', 
-         justifyContent: 'center', 
-         alignItems: 'center', 
-         minHeight: '100vh',
-      }}>
+  const navigate = useNavigate();
 
-        <Auth
-          supabaseClient={supabase}
-          appearance={{ theme: ThemeSupa}}
-          providers={[]}          
-        />
-      </div>
+  useEffect(() => {
+    if (session) {
+      navigate('/');
+    }
+  }, [session, navigate]);
+
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+    }}>
+      <Auth
+        supabaseClient={supabaseClient}
+        appearance={{ theme: ThemeSupa }}
+        providers={[]}
+      />
+    </div>
   )
 }
