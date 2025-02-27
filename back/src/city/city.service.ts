@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
-import { createClient } from '@supabase/supabase-js';
+import { HttpException, Injectable } from '@nestjs/common';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { catchError, map, of, type Observable } from 'rxjs';
 import { EnvironmentService } from 'src/environment/environment.service';
 import type { TAdressesResponse, TCity, TFavoriteCity } from './city.types';
@@ -8,6 +8,10 @@ import type { TAdressesResponse, TCity, TFavoriteCity } from './city.types';
 @Injectable()
 export class CityService {
   private readonly gouvAdressesUrl = 'https://data.geopf.fr/geocodage/search';
+  private readonly supabaseClient: SupabaseClient = createClient(
+    this.environmentService.getSupabaseUrl(),
+    this.environmentService.getSupabaseKey(),
+  );
 
   constructor(
     private readonly httpService: HttpService,
@@ -38,16 +42,30 @@ export class CityService {
 
   async saveFavoriteCity(
     favoriteCity: TFavoriteCity,
-  ): Promise<{ status: 'success' | 'error' }> {
-    const supabase = createClient(
-      this.environmentService.getSupabaseUrl(),
-      this.environmentService.getSupabaseKey(),
-    );
-
-    const { error } = await supabase
+  ): Promise<{ status: 'success' }> {
+    const { error, status } = await this.supabaseClient
       .from('favoritesCities')
       .insert(favoriteCity);
 
-    return { status: Boolean(error) ? 'error' : 'success' };
+    if (error) {
+      console.error(error);
+      throw new HttpException('Something went wrong, con', status);
+    }
+
+    return { status: 'success' };
+  }
+
+  async deleteFavoriteCity(city: string): Promise<{ status: 'success' }> {
+    const { error, status } = await this.supabaseClient
+      .from('favoritesCities')
+      .delete()
+      .eq('label', city);
+
+    if (error) {
+      console.error(error);
+      throw new HttpException('Something went wrong, con', status);
+    }
+
+    return { status: 'success' };
   }
 }
