@@ -8,7 +8,7 @@ import type { TAdressesResponse, TCity, TFavoriteCity } from './city.types';
 @Injectable()
 export class CityService {
   private readonly gouvAdressesUrl = 'https://data.geopf.fr/geocodage/search';
-  private supabaseClient: SupabaseClient = createClient(
+  private readonly supabaseClient: SupabaseClient = createClient(
     this.environmentService.getSupabaseUrl(),
     this.environmentService.getSupabaseKey(),
   );
