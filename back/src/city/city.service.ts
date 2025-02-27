@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { catchError, map, of, type Observable } from 'rxjs';
 import { EnvironmentService } from 'src/environment/environment.service';
@@ -42,20 +42,30 @@ export class CityService {
 
   async saveFavoriteCity(
     favoriteCity: TFavoriteCity,
-  ): Promise<{ status: 'success' | 'error' }> {
-    const { error } = await this.supabaseClient
+  ): Promise<{ status: 'success' }> {
+    const { error, status } = await this.supabaseClient
       .from('favoritesCities')
       .insert(favoriteCity);
 
-    return { status: Boolean(error) ? 'error' : 'success' };
+    if (error) {
+      console.error(error);
+      throw new HttpException('Something went wrong, con', status);
+    }
+
+    return { status: 'success' };
   }
 
-  async deleteFavoriteCity(city: string) {
-    const { error } = await this.supabaseClient
+  async deleteFavoriteCity(city: string): Promise<{ status: 'success' }> {
+    const { error, status } = await this.supabaseClient
       .from('favoritesCities')
       .delete()
       .eq('label', city);
 
-    return { status: Boolean(error) ? 'error' : 'success' };
+    if (error) {
+      console.error(error);
+      throw new HttpException('Something went wrong, con', status);
+    }
+
+    return { status: 'success' };
   }
 }
