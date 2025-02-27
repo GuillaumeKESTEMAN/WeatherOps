@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { catchError, map, of, type Observable } from 'rxjs';
 import { EnvironmentService } from 'src/environment/environment.service';
 import type { TAdressesResponse, TCity, TFavoriteCity } from './city.types';
@@ -8,6 +8,10 @@ import type { TAdressesResponse, TCity, TFavoriteCity } from './city.types';
 @Injectable()
 export class CityService {
   private readonly gouvAdressesUrl = 'https://data.geopf.fr/geocodage/search';
+  private supabaseClient: SupabaseClient = createClient(
+    this.environmentService.getSupabaseUrl(),
+    this.environmentService.getSupabaseKey(),
+  );
 
   constructor(
     private readonly httpService: HttpService,
@@ -39,14 +43,18 @@ export class CityService {
   async saveFavoriteCity(
     favoriteCity: TFavoriteCity,
   ): Promise<{ status: 'success' | 'error' }> {
-    const supabase = createClient(
-      this.environmentService.getSupabaseUrl(),
-      this.environmentService.getSupabaseKey(),
-    );
-
-    const { error } = await supabase
+    const { error } = await this.supabaseClient
       .from('favoritesCities')
       .insert(favoriteCity);
+
+    return { status: Boolean(error) ? 'error' : 'success' };
+  }
+
+  async deleteFavoriteCity(city: string) {
+    const { error } = await this.supabaseClient
+      .from('favoritesCities')
+      .delete()
+      .eq('label', city);
 
     return { status: Boolean(error) ? 'error' : 'success' };
   }

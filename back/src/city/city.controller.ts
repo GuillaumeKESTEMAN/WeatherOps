@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 import { CityService } from './city.service';
 import { TFavoriteCity } from './city.types';
 
@@ -14,5 +14,10 @@ export class CityController {
   @Post('favorite')
   async saveFavoriteCity(@Body() body: TFavoriteCity) {
     return this.cityService.saveFavoriteCity(body);
+  }
+
+  @Delete('favorite')
+  async deleteFavoriteCity(@Query() query: { city: string }) {
+    return this.cityService.deleteFavoriteCity(query.city);
   }
 }
