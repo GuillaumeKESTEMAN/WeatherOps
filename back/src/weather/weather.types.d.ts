@@ -54,4 +54,5 @@ export type TWeather = {
   windSpeed: number;
   clouds: number;
   icon: string;
+  description: string;
 };

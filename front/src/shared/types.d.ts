@@ -5,6 +5,8 @@ export type TWeather = {
 	humidity: number | null;
 	windSpeed: number | null;
 	clouds: number | null;
+	icon: string | null;
+	description: string | null;
 };
 
 export type TCity = {
