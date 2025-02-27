@@ -13,11 +13,3 @@ body {
 	height: 100vh;
 	width: 100vw;
 }
-
-.log{
-	position: relative;
-	display: flex;
-	justify-content: right;
-  	align-items: right; 
-	z-index: 400;
-}

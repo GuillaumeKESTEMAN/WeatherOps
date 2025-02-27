@@ -1,8 +1,7 @@
 import { Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
 import { useAppContext } from '../../../shared/AppContext/AppContext.hook';
+import '../Home.css';
 import { useMapManager } from './MapManager.hook';
-import { LogManager } from '../LogManager';
-import '../Home.css'
 
 export const MapManager = () => {
 	const { coordinates } = useAppContext();
@@ -19,7 +18,6 @@ export const MapManager = () => {
 					Longitude: {coordinates[1]}
 				</Popup>
 			</Marker>
-			<LogManager />
 			<ZoomControl position="bottomright" />
 		</>
 	);

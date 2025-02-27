@@ -1,35 +1,42 @@
-import { createClient, type SupabaseClient, type Session } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
+import { type SupabaseClient, type User } from '@supabase/supabase-js';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import { useAppContext } from '../AppContext/AppContext.hook';
 
-const DB_URL = import.meta.env.VITE_DB_URL;
-const DB_API_KEY = import.meta.env.VITE_DB_API_KEY;
-
-type TUseLogin = { supabaseClient: SupabaseClient, session: Session | null }
+type TUseLogin = { supabaseClient: SupabaseClient; user: User | null };
 
 export const useLogin = (): TUseLogin => {
+	const { supabaseClient } = useAppContext();
+	const [user, setUser] = useState<User | null>(null);
 
-    const supabaseClient = createClient(DB_URL, DB_API_KEY);
-    const [session, setSession] = useState<Session | null>(null);
+	useEffect(() => {
+		const checkSession = async () => {
+			const {
+				data: { session },
+			} = await supabaseClient.auth.getSession();
+			setUser(session?.user ?? null);
+		};
 
-    useEffect(() => {
-        const checkSession = async () => {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            setSession(session);
-        };
+		checkSession();
 
-        checkSession();
+		const { data: authListener } = supabaseClient.auth.onAuthStateChange(
+			(_, session) => {
+				if (session?.user && !user) {
+					setUser(session.user);
+					Cookies.set('sb-access-token', session.access_token, {
+						expires: 1,
+					});
+				} else if (!session?.user && user) {
+					setUser(null);
+					Cookies.remove('sb-access-token');
+				}
+			}
+		);
 
-        const { data: authListener } = supabaseClient.auth.onAuthStateChange((event, session) => {
-            console.log('session :',session);
-            console.log('event :',event);
-            setSession(session);
-        });
+		return () => {
+			authListener.subscription.unsubscribe();
+		};
+	}, [supabaseClient.auth, user]);
 
-        return () => {
-            authListener.subscription.unsubscribe();
-        };
-    }, []);
-
-    return { supabaseClient, session };
-
-}
+	return { supabaseClient, user };
+};
