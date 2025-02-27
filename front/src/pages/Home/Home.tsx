@@ -3,6 +3,7 @@ import { MapContainer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useAppContext } from '../../shared/AppContext/AppContext.hook';
 import './Home.css';
+import { LoginButton } from './LoginButton/LoginButton';
 import { MapManager } from './MapManager/MapManager';
 import { MapPanel } from './MapPanel/MapPanel';
 
@@ -12,6 +13,7 @@ export const Home = () => {
 	return (
 		<div className="map relative">
 			<MapPanel />
+			<LoginButton />
 			<MapContainer
 				center={coordinates}
 				zoom={13}

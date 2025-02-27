@@ -5,10 +5,13 @@ import { Route, Routes } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { Home } from './pages/Home/Home';
 import { AppContextProvider } from './shared/AppContext/AppContextProvider';
+import { Login } from './pages/Login';
 
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
+
+
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
@@ -17,6 +20,7 @@ createRoot(document.getElementById('root')!).render(
 				<PrimeReactProvider>
 					<Routes>
 						<Route path="/" element={<Home />} />
+						<Route path='/login' element={<Login />} />
 					</Routes>
 				</PrimeReactProvider>
 			</BrowserRouter>

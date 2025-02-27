@@ -1,5 +1,6 @@
 import type { LatLngTuple } from 'leaflet';
 import { useEffect, useMemo, useState } from 'react';
+import { supabaseClient } from '../supabaseClient';
 import type { TWeather } from '../types';
 import { AppContext } from './AppContext';
 import { getWeatherData } from './AppContext.helpers';
@@ -20,6 +21,7 @@ export const AppContextProvider = ({ children }: TAppContextProvider) => {
 
 	const appContextValue = useMemo<TAppContext>(
 		() => ({
+			supabaseClient,
 			coordinates,
 			weatherData,
 			handleCitySelection: setCoordinates,

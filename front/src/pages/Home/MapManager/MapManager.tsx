@@ -1,11 +1,11 @@
 import { Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
 import { useAppContext } from '../../../shared/AppContext/AppContext.hook';
+import '../Home.css';
 import { useMapManager } from './MapManager.hook';
 
 export const MapManager = () => {
 	const { coordinates } = useAppContext();
 	useMapManager();
-
 	return (
 		<>
 			<TileLayer
