@@ -17,6 +17,8 @@ export const AppContextProvider = ({ children }: TAppContextProvider) => {
 		humidity: null,
 		windSpeed: null,
 		clouds: null,
+		icon: null,
+		description: null,
 	});
 
 	const appContextValue = useMemo<TAppContext>(
