@@ -5,6 +5,16 @@
 Le projet WeatherOps est une application web avec une carte qui permet d'obtenir la météo pour n'importe quel emplacement en France.
 Pour cela, il suffit d'entrer une ville dans la barre de recherche ou de cliquer sur un point.
 
+## Architecture
+
+Le dossier back contient tout le back de l'application
+
+Le dossier front contient tout le front de l'application
+
+Le dossier k8s contient tout concernant kubernetes
+
+Et le dossier terraform contient tout ce qui concerne terraform
+
 ## Technologies
 
 Les technologies sont : 
@@ -15,6 +25,29 @@ Les technologies sont :
 - APIs : 
   - API du gouvernement pour récupérer les villes de France
   - API d'OpenWeatherMap pour les prévisions météo
+
+## Base de données
+
+Nous avons utilisé supabase comme base de données.
+
+La seule table ayant été créée est la table `favoritesCities` avec le schéma suivant
+
+- id: uuid
+- user_id: foreign key -> auth.users.id
+- label: text
+- lon: numeric
+- lat : numeric
+
+## Lancement du projet en local
+
+1. Installer les dépendances dans le front et le back (lancez `npm ci` dans les 2 dossiers)
+2. Lancer le front et le back (`npm run dev` pour le front et `npm run start:dev` pour le back)
+
+## Déploiement Kubernetes
+
+Un script de déploiement a été prévu : script.sh
+
+Ce script vous permettra de lancer minikube, builder les différentes images docker, puis d'appliquer les fichiers de configurations présents dans le dossier k8s
 
 ## Terraform
 
@@ -52,3 +85,7 @@ De plus, de nombreuses templates (exemples de configurations) sont disponibles s
 
 Guillaume K., Pierre T., Thibault F. : Développement (back, front, API, base de données)
 Simon B. : DevOPS (Terrafom, Kubernetes, Docker, Documentation)
+
+Pour plus d'informations sur la répartition des tâches un Kanban de gestion de projet a été fait avec les issues (chaque PR a été relié aux issues correspondantes)
+
+<https://github.com/users/GuillaumeKESTEMAN/projects/9>
